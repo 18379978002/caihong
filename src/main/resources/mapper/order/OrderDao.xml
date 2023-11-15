@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caipiao.modules.order.dao.OrderDao">
+
+    <select id="queryStatusNumCount" resultType="com.caipiao.modules.order.dto.MyDataDTO">
+        select
+            count(if(win_status=3,true,null)) as winNum,
+            count(if(win_status=1 and plan_status=2,true,null)) as waitOpenNum,
+            count(if(plan_status=1,true,null)) as waitTicketNum
+        from tb_order where user_id=#{userId}
+    </select>
+
+    <select id="queryAmountCount" resultType="com.caipiao.modules.order.dto.AmountCountDTO">
+        select sum(amount) as amount,
+                match_type,
+                sum(bonus_amount) as bonusAmount
+        from tb_order
+        where plan_status in (1,2)
+        <!-- 1、当天 2、本周 3、本月 -->
+        <if test="req.period == 1">
+            and DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+        </if>
+        <if test="req.period == 2">
+            and YEARWEEK(date_format(create_time,'%Y-%m-%d')) = YEARWEEK(now())
+        </if>
+        <if test="req.period == 3">
+            and DATE_FORMAT(create_time, '%Y%m') = DATE_FORMAT(CURDATE( ),'%Y%m' )
+        </if>
+        <if test="req.userIds != null">
+            and user_id in
+            <foreach item="userId" collection="req.userIds" open="(" separator="," close=")">
+                #{userId}
+            </foreach>
+        </if>
+        GROUP BY match_type
+    </select>
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caipiao.modules.common.dao.CountDataDao">
+    <select id="countData" resultType="com.caipiao.modules.common.entity.CountData">
+        select
+            sum(new_user_num) as newUserNum,
+            sum(staff_recharge) as staffRecharge,
+            sum(alipay_recharge) as alipayRecharge,
+            sum(basketball_sale_amt) as basketballSaleAmt,
+            sum(football_sale_amt) as footballSaleAmt,
+            sum(dispatch_amt) as dispatchAmt
+        from tb_count_data
+        where 1=1
+        <if test="staffId != null and staffId != ''">
+            and staff_id = #{staffId}
+        </if>
+        <if test="ym != null and ym != ''">
+            and left(count_date,7) = #{ym}
+        </if>
+        <if test="ymd != null and ymd != ''">
+            and count_date = #{ymd}
+        </if>
+    </select>
+    <select id="countSaleLimit" resultType="com.caipiao.modules.common.entity.CountDataDO">
+        select
+            tb_count_data.staff_id staffId,
+            user_info.headimg_url headimgUrl,
+        tb_sm_sysstaff.STAFF_NAME staffName,
+        <!--     计算销售业绩       -->
+        sum( tb_count_data.basketball_sale_amt )+
+        sum( tb_count_data.football_sale_amt ) +
+        sum( tb_count_data.pls_sale_amt )+
+        sum( tb_count_data.dlt_sale_amt ) AS saleSum
+        from tb_count_data
+           inner join tb_sm_sysstaff on tb_count_data.staff_id = tb_sm_sysstaff.STAFF_ID
+            and tb_sm_sysstaff.POSITION='1'
+           left join user_info on tb_sm_sysstaff.user_id = user_info.id
+            where STR_TO_DATE(tb_count_data.count_date, '%Y-%m-%d') > #{dateTime}
+        group by tb_count_data.staff_id
+        order by saleSum desc
+            limit #{limit};
+    </select>
+
+</mapper>

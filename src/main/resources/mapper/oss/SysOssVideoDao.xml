@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.caipiao.modules.oss.dao.SysOssVideoDao">
+
+    <select id="queryPage" resultType="com.caipiao.modules.oss.entity.SysOssVideo">
+        select
+        dl.*, cc.name as categoryName
+        from sys_oss_video dl
+        left join sys_video_category cc on cc.id=dl.category_id
+        where
+        1=1
+        <if test="req.companyId != null and req.companyId != ''">
+            and dl.company_id =#{req.companyId}
+        </if>
+        <if test="req.originalFileName != null and req.originalFileName != ''">
+            and dl.original_file_name like concat('%',#{req.originalFileName},'%')
+        </if>
+        <if test="req.categoryId != null">
+            and dl.category_id =#{req.categoryId}
+        </if>
+        <if test="req.categoryId != null">
+            and dl.category_id =#{req.categoryId}
+        </if>
+        <if test="req.videoType != null">
+            and dl.video_type =#{req.videoType}
+        </if>
+        <if test="req.isHot != null">
+            and dl.is_hot =#{req.isHot}
+        </if>
+        <if test="req.isCollect != null">
+            and dl.is_collect =#{req.isCollect}
+        </if>
+        ORDER BY dl.add_time desc
+    </select>
+</mapper>

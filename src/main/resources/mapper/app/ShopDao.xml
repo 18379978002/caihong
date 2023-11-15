@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caipiao.modules.company.dao.ShopDao">
+
+    <sql id="Base_Column_List">
+        id
+        ,shop_name,shop_phone,
+        shop_host,wx,shop_address,
+        shop_affiche,del_flag,
+        create_time,update_time,tenant_id
+    </sql>
+
+
+    <select id="get" resultType="com.caipiao.modules.company.entity.Shop">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_shop
+    </select>
+
+
+
+</mapper>

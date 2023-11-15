@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caipiao.modules.sys.dao.TbLotteryTypeConfMapper">
+  <resultMap id="BaseResultMap" type="com.caipiao.modules.sys.entity.TbLotteryTypeConf">
+    <!--@mbg.generated-->
+    <!--@Table tb_lottery_type_conf-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="field_name" jdbcType="VARCHAR" property="fieldName" />
+    <result column="field_value" jdbcType="LONGVARCHAR" property="fieldValue" />
+    <result column="lottery_type" jdbcType="VARCHAR" property="lotteryType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, field_name, field_value, lottery_type
+  </sql>
+</mapper>

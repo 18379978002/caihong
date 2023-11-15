@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caipiao.modules.app.dao.UserRechargeRecordDao">
+
+    <select id="queryCountData" resultType="com.caipiao.modules.app.dto.RechargeCountDTO">
+        select sum(recharge_amount) as rechargeAmount,payment_way
+        from user_recharge_record
+        where pay_status=1 and payment_way in ('2','3', '4')
+        <!-- 1、当天 2、本周 3、本月 -->
+        <if test="req.period == 1">
+            and DATE_FORMAT(create_time,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+        </if>
+        <if test="req.period == 2">
+            and YEARWEEK(date_format(create_time,'%Y-%m-%d')) = YEARWEEK(now())
+        </if>
+        <if test="req.period == 3">
+            and DATE_FORMAT(create_time, '%Y%m') = DATE_FORMAT(CURDATE( ),'%Y%m' )
+        </if>
+        <if test="req.userIds != null">
+            and user_id in
+            <foreach item="userId" collection="req.userIds" open="(" separator="," close=")">
+                #{userId}
+            </foreach>
+        </if>
+
+        GROUP BY payment_way
+
+    </select>
+
+
+
+</mapper>

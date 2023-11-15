@@ -1,0 +1,68 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    type: com.zaxxer.hikari.HikariDataSource
+    password: RainbowLeague2022$
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      maximum-pool-size: 15
+      minimum-idle: 5
+      pool-name: MySQLHikariCP
+    url: jdbc:mysql://124.223.170.201:8003/lottery?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+  redis:
+    #数据库索引
+    database: 0
+    host: 124.223.170.201
+    port: 63791
+    #连接超时时间
+    timeout: 50000ms
+    lettuce:
+      max-active: 8
+      max-wait: 10000
+      max-idle: 20
+      min-idle: 0
+      shutdown-timeout: 100ms
+#    password: 123456
+aliyun:
+  sms:
+    regionId: cn-hangzhou
+    domain: dysmsapi.aliyuncs.com
+    version: 2017-05-25
+    signName: 彩虹联盟
+    accessKey:
+    accessSecret:
+logging:
+  level:
+    org.springframework.web: info
+    com.github.binarywang.wxpay: debug
+wx:
+  pay:
+    appId: wx5ff41 #微信公众号或者小程序等的appid
+    mchId: 1601628 #微信支付商户号
+    mchKey: atx913611008 #微信支付商户密钥
+    subAppId: #服务商模式下的子商户公众账号ID
+    subMchId: #服务商模式下的子商户号
+    keyPath: classpath:cert/apiclient_cert.p12 # p12证书的位置，可以指定绝对路径，也可以指定类路径（以classpath:开头）
+    notifyUrl: https://pay.saiyusoft.cn/caipiao-api/app/userrecharge/notify-order-wx
+alipay:
+  appId:  2021003126607486  #应用ID,您的APPID，收款账号既是您的APPID对应支付宝账号
+  merchantPrivateKey:  MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCBFJTWwwz1fqDEdhR2FK1spsVa+mBx7LJ6vPCcGSZCWlJmx9c/6f1aDhgECpMB86/3CPpAMfFqAMCZ923S9icuNraZ30MFL8BA4m2g0eumOE2anB+HBuqwV+aXltIPsF38Sx5jTBtuKRjega20syVCbwKJic271OjL3w5iwEMxO43WqXrEIMduwogMxl5HO0VFo4bFcfHZp1D3LZ22FxAZ1CWMIqP1FTqyflTPXhuvaciRLLvQyyJsTtn5MiPiui3z/kv0G0Gyyt16yPIWFfVqbHNXg9NIIpW7ZkFXk/bPBOvYJtW/jDjlsK9bE9T8f5+R7JwdewP5h9Ck4Ht6+NZ9AgMBAAECggEAJRxftmcZoLMpUZKJS3Gicqx37TIy7E4a+kK8AoUQhN8m9bna3ttNJckLio3nuhXvr1x7Zl11hP52YU3L22090oGUeiTARgt2gLEYx7XSxFVHqn3capvIea6r80U/W5dfThvivrWw5TkXl1E9OciPm8wCtLxT0/7gd0zH/Ag+yTZmE09SRa2zG5aBGe4allw3ItS8o965gt6B6GLRpeexoipgfn1+3MO5gKv7CGBiWZWjoKAVg5MiAlV1sLVVwpW0Woj5GRJmkfMF91QvUMB6kp1fc7S2SSX+M2gfCEcO7s1eujVmZLAdtYGeo3Je5/wDUWGOkx32ih3ftGD5BlQn2QKBgQDWxd02IOhFoZ8+fJgoys5dML5FooPetdyMFlOVpOrt9L3WwvK7EEZgIvOxPwUQ1bO+XdHDYd1QN6qEfG2vQNI5k8+ideiGwgwBa4NFAxxbqC37FDyILbsYWdz/qSigh1rI8csDTfyRXgBS1nQsK08d7QOvMh4P5sg33Rp3ko5/uwKBgQCZ27WcebND9uiVZejbBQrDaRt/5gsMyWnN1Vj1K/loMxvCuQTnNJuux3Gyo+S0Fh4Y5dVwU6NfMCphMmFLMbbyxOxIWQEytzmhQHQwJUP0v1ZTuijb/kasWD0Oezk2hCX4u4giMjaTJ7jIfYt99cCWxB7BpnisxPIPY3euwZGTJwKBgGjF39N/HDCT1t6h44zK2v9FPx0zWcd0yqGgZqgy6tSot0+kjMtK9joB8wX9q1f6GJR+qkz5WgC/FzVIii2bnrKt8/XaNVRAJ6EttL0e9l+UXNIGnj0EqigH9rLV79bYESbEJfh3vAWiaOAAdG3ztsXvkQOPnHC/cd8mwrmgSlnvAoGASiORE+Gg/HMSCEufNUrssNUJJ0xWrsavcTwJLbsO56MZEW/OaQr0qff5VbecERtHTYASpZnn84pmIYgBUhaWrc0ufn5FEYcxAf7o/fo3EMzScG4YGkohDBNI+J1wKFDtazoSk0fW/Hn7lMDKYtv0/bFrkK0DIV2Vtsybc15bI6kCgYEAzC46BnWBYNaacrBlJLEP98JkHY488qkogi3KslMqBGpkCQO1lR58IeRbu3njjnUhNshaxTlVGs6VgkfxaiFwGXwbpqCD5sETJYeHiHERGqRFYnZS4RjE1yuC0YGNjNDdOaeXZnmfXQYiehtS9X5nDtCTojyh2eAcuNtKkSeVVRw= #商户私钥，您的PKCS8格式RSA2私钥
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq1q58CFKVzw4BipeYUhJyaZcKSSugqs1E8PQO6VyKzzXcpELOJfsen3s+64BJO93LjoicZOy1WsLgeF7kPdnGlAGX/S57djwYHtYlie6bAgsyPsNZEBI/dvMdANYuVodDwmtjVwWyK4sGYmI+aaR5RfW7ow5EvqYog+cckxowSu/LE6wQvfAokFNiKBklBZh+5oi1CyAlDGGCov2KMsx3uaq7XQnaKN7ogmyYIPU8MEAHE/fr2gtvZGUj+w+G2MgzpXwc16I6BBzlxTQQcjPU5Zsg13qvZ0mTGls0uusKWkOfQ76jM+QehVxICdiWO51lkAXyBiCnoeVQW0fYW2yYQIDAQAB #支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
+  notifyUrl: https://pay.saiyusoft.cn/caipiao-api/app/userrecharge/notify-order-ali #服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+  returnUrl: #页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+  signType: RSA2 #签名方式
+  charset: utf-8 #字符编码格式
+  gatewayUrl: https://openapi.alipaydev.com/gateway.do #支付宝网关
+custom:
+  attach:
+    active: minio
+    minio:
+      host: http://124.223.170.201:9000/
+      bucket: files
+      AccessKey: B9YS9U5H2CV2DJE622L4
+      SecretKey: 9tXlYn8I9uIdVjWWE4qUeCFZrRkvnLs11QD2NEGL

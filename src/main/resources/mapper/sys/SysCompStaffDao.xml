@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.caipiao.modules.sys.dao.SysCompStaffDao">
+    <!-- 查询用户的所有权限 -->
+    <select id="queryPage" resultType="com.caipiao.modules.sys.entity.vo.SysCompStaffVO">
+        select
+            staff.*
+        from TB_SM_SYSSTAFF staff
+    </select>
+
+    <select id="getByStaffId" resultType="com.caipiao.modules.sys.entity.vo.SysCompStaffVO">
+        select
+            staff.staff_id,
+            staff.staff_name,
+            staff.avatar,
+            staff.position,
+            staff.user_id
+            group_concat(dp.name) as deptName
+        from TB_SM_SYSSTAFF staff
+        left join tb_pm_staff_dept d on d.user_id=staff.staff_id
+        left join tb_pm_dept dp on dp.id = d.dept_id
+        where 1=1 and staff.staff_id = #{staffId}
+        group by staff.staff_id,staff.staff_name,staff.avatar
+    </select>
+
+    <select id="loadStaffIdByName" resultType="java.lang.String">
+        select
+            staff.staff_id
+        from TB_SM_SYSSTAFF staff
+        where staff.staff_name = #{staffName} limit 1
+    </select>
+
+    <select id="getNextId" resultType="java.lang.String">
+        select concat('AS', lpad(right(ifnull(max(user_id), 0), 6) + 1, 6, 0)) from TB_SM_SYSSTAFF
+    </select>
+
+    <select id="selectByUserId" resultType="com.caipiao.modules.sys.entity.SysCompStaffEntity">
+        select * from TB_SM_SYSSTAFF where user_id=#{userId,jdbcType=VARCHAR};
+    </select>
+</mapper>
